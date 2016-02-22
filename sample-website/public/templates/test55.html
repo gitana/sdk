@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!--<![endif]-->
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width">
+	<title>Mon site cloud cms</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" media="all" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script src="js/jquery.bxslider.js"></script>
+	
+</head>
+<body>
+	<header>
+	<nav>
+		<ul>
+		  <li>Home</li>
+		  <li>about</li>
+		  <li>products</li>
+		</ul>
+	</nav>
+	</header>
+	
+	<section>
+		<ul class="bxslider">
+		  <li><img src="http://bxslider.com/images/730_200/hill_trees.jpg" /></li>
+		  <li><img src="http://bxslider.com/images/730_200/me_trees.jpg" /></li>
+		  <li><img src="http://bxslider.com/images/730_200/houses.jpg" /></li>
+		</ul>
+	</section>
+	
+	<footer>
+	</footer>
+	
+	<script>
+		$('.bxslider').bxSlider({
+		  auto: true,
+		  autoControls: true
+		});
+	</script>
+</body>
+</html>
