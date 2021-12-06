@@ -22,13 +22,13 @@ const HomePage = ({ books, authors }) => {
 export async function getStaticProps(context)
 {
     const branch = await getCurrentBranch(context);
-    let books = (await branch.queryNodes({ _type: "store:book" }, { limit: -1 })).rows;
-    let authors = (await branch.queryNodes({ _type: "store:author" }, { limit: -1 })).rows;
+    let books = (await branch.queryNodes({ _type: "store:book" }, { limit: 4 })).rows;
+    let authors = (await branch.queryNodes({ _type: "store:author" }, { limit: 4 })).rows;
 
     return {
         props: {
-            books: books.slice(0,4),
-            authors: authors.slice(0,4)
+            books: books,
+            authors: authors
         }
     }
 }

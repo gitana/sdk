@@ -1,6 +1,5 @@
 import * as cloudcms from 'cloudcms';
 import { UtilitySession } from 'cloudcms';
-import * as gitanaJson from '../gitana.json';
 import * as fs from 'fs';
 import mime from 'mime-types';
 
@@ -81,7 +80,7 @@ class NextSession extends UtilitySession {
         {
             return `/api/${nodeId}/${attachmentId}`;
         }
-        if (!this._savedAttachments[tokens] ) {
+        if (!this._savedAttachments[tokens] || process.env.NODE_ENV === 'development') {
             const saveDir = `${CLOUDCMS_SAVE_PATH}/${repositoryId}/${branchId}/${nodeId}`;
             if (!fs.existsSync(saveDir)) {
                 fs.mkdirSync(saveDir, { recursive: true });
@@ -144,6 +143,21 @@ let session = null;
 export async function connect() {
     if (!session) {
         cloudcms.session(NextSession);
+
+        let gitanaJson = await import('../gitana.json');
+        if (!gitanaJson)
+        {
+            gitanaJson = {
+                "clientKey": process.env.CLOUDCMS_CLIENT_KEY,
+                "clientSecret": process.env.CLOUDCMS_CLIENT_SECRET,
+                "username": process.env.CLOUDCMS_USERNAME,
+                "password": process.env.CLOUDCMS_PASSWORD,
+                "baseURL": process.env.CLOUDCMS_BASE_URL,
+                "application": process.env.CLOUDCMS_APPLICATION
+            }
+        }
+
+
         session = await cloudcms.connect(gitanaJson);
     }
 
