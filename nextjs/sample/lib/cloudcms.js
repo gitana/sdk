@@ -144,7 +144,12 @@ export async function connect() {
     if (!session) {
         cloudcms.session(NextSession);
 
-        let gitanaJson = await import('../gitana.json');
+        let gitanaJson = null;
+        if (fs.existsSync(`${process.cwd()}/gitana.json`))
+        {
+            gitanaJson = fs.readFileSync(`${process.cwd()}/gitana.json`)
+        }
+
         if (!gitanaJson)
         {
             gitanaJson = {
@@ -156,7 +161,6 @@ export async function connect() {
                 "application": process.env.CLOUDCMS_APPLICATION
             }
         }
-
 
         session = await cloudcms.connect(gitanaJson);
     }

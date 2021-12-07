@@ -27,7 +27,9 @@ Go into your `nextjs/sample` directory and do the following.
 
 To run Next with a development server, run `npm run dev`. This will serve at http://localhost:3000
 
-To make a static build, run `npm run build`. You can then run the next static server for the generated `out/` directory with `npm run start`, which will serve at http://localhost:3000
+To make a production ready build that will run with a server, run `npm run build`. You can then run the next server  `npm run start`, which will serve at http://localhost:3000,
+
+To build and export a static build, run `npm run export`. You can then run the next static server for the generated `out`, which you can serve with any static file server.
 
 ## Preview Mode
 
