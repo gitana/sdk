@@ -41,6 +41,12 @@ users with deploying Gitana into various container frameworks, including Kuberne
 
 There are examples here for both Gitana 3.2 and Gitana 4.0.
 
+### HTTP Deployment Receiver
+
+The `http-deployment-receiver` directory contains a sample Node.js-based deployment receiver that you can
+instantiate to get an idea of how to handle your own deployments.  Content is sent to your listener and you
+can use this to potentially update a local database, invalidate cache, populate a search index or more.
+
 ### Packager
 
 The `packager` directory contains examples how to use our ETL (Extract, Transform, Load) tool to consume
@@ -48,14 +54,20 @@ data from external sources (such as databases, email or file systems) and store 
 
 ### UI Extensions
 
-The `ui-extensions` directory contains sample modules and theme extensions that can be applied to the 
-Gitana User Interface (both in the cloud and self-managed) to change the user interface and introduce
-new functionality.
+The `ui-extensions` directory contains sample modules, form components and theme extensions that can be 
+applied to the Gitana User Interface (both in the cloud and self-managed) to change the user interface 
+and/or introduce new functionality.
 
 ### UI Frameworks
 
 The `ui-frameworks` directory contains samples of how to utilize the Gitana APIs from within various
 frontend UI frameworks such as Next.js, Nuxt, React and others).
+
+### Web Hook Server
+
+The `webhook-server` directory contains a sample Node.js-based Web Hook server that you can run to get
+an idea of how to handle web hooks that are triggered by Gitana's event system.  You can use this to
+potentially update a local DB, perform cache invalidation or fire off custom logic as per your needs.
 
 ## Drivers
 
