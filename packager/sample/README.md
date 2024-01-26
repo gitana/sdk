@@ -1,4 +1,4 @@
-# Sample Importer
+# Gitana Platform - Sample Importer
 
 Cloud CMS provides a command line tool that you can use to bulk import data into your content repository branches.  This allows
 you to migrate existing data into Cloud CMS within a single transaction -- everything goes in or nothing goes in on top of a
@@ -11,7 +11,8 @@ This process is intended to support one-time "bulk load" scenarios as well as "i
 To run any imports, you will first need to install the Cloud CMS command line tool.  
 
 Installation instructions are provided here:
-https://www.cloudcms.com/commandline.html
+
+    https://gitana.io/documentation/gitana/4.0/developers/cli.html
 
 Once you have the tool installed, you will need to open a command prompt in the directory where this README file is.
 

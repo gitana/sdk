@@ -1,0 +1,201 @@
+version: "2"
+
+services:
+
+  ui1:
+    image: cloudcms/ui-server:3.2.79
+    networks:
+      - cloudcms-replicaset
+    environment:
+      - "GITANA_PROXY_SCHEME=http"
+      - "GITANA_PROXY_HOST=api1"
+      - "GITANA_PROXY_PORT=8080"
+      - "NODE_ENV=production"
+      - "CLOUDCMS_VIRTUAL_HOST=root.cloudcms.net"
+      - "CLOUDCMS_VIRTUAL_DRIVER_CLIENT_KEY=eb900512-9c58-4524-84ac-f748c134fddd"
+      - "CLOUDCMS_VIRTUAL_DRIVER_CLIENT_SECRET=I9QhlBfO5dMmvG5lFdBSD1zqu7FtI0IewnV7JPCP6IddGo4LjaWhYKunRDVaIPol9Vy8kX8AAEZj4JMMP/Q5eQ5MgVjwDxOMAqtuUXBP0vA="
+      - "CLOUDCMS_VIRTUAL_DRIVER_AUTHGRANT_KEY=02cee14c-748b-439c-b202-36a5127fa398"
+      - "CLOUDCMS_VIRTUAL_DRIVER_AUTHGRANT_SECRET=4HGslH6mbfoReDsOLf5LLfv0joVNsGsrBd/PUpWuYPeOO7tqm0RVDHxtJujdiAso0Qkx5qvRFxJuHXSUDrrp7p3b2kJQ9cd5p8Z8nJLehC4="
+      - "CLOUDCMS_VIRTUAL_DRIVER_BASE_URL=http://api1:8080"
+      - "CLOUDCMS_NOTIFICATIONS_ENABLED=true"
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_HOST=activemq1"
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_PORT=61613"
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_USERNAME="
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_PASSWORD="
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_QUEUE_URL=/queue/cloudcms.ui.queue"
+      - "CLOUDCMS_STARTUP_TIMEOUT_MS=60000"
+    depends_on:
+      - api1
+      - activemq1
+    ports:
+      - "180:80"
+    volumes:
+      - ./data/ui1/hosts:/hosts
+
+  api1:
+    build: api1
+    networks:
+      - cloudcms-replicaset
+    depends_on:
+      - mongodb1
+      - mongodb2
+      - mongodb3
+      - elasticsearch1
+      - activemq1
+    env_file:
+      - api1/api.env
+    ports:
+      - "18080:8080"
+    volumes:
+      - ./data/api1/logs:/opt/tomcat/logs
+      - ./data/api1/temp:/opt/tomcat/temp
+      - ./data/api1/cache:/data/cache
+      - ./data/api1/binaries:/data/binaries
+
+  mongodb1:
+    image: mongo:3.4.9
+    networks:
+      - cloudcms-replicaset
+    ports:
+      - "27027:27017"
+    volumes:
+      - ./data/mongodb1/data:/data/db
+      - ./mongod1.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
+
+  mongodb2:
+    image: mongo:3.4.9
+    networks:
+      - cloudcms-replicaset
+    ports:
+      - "27028:27017"
+    volumes:
+      - ./data/mongodb2/data:/data/db
+      - ./mongod2.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
+
+  mongodb3:
+    image: mongo:3.4.9
+    networks:
+      - cloudcms-replicaset
+    ports:
+      - "27029:27017"
+    volumes:
+      - ./data/mongodb3/data:/data/db
+      - ./mongod3.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
+
+  elasticsearch1:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    networks:
+      - cloudcms-replicaset
+    environment:
+      - "cluster.name=cloudcms-docker-replicaset1"
+      - "transport.host=elasticsearch1"
+      - "network.host=elasticsearch1"
+      - "discovery.type=single-node"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx2g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "19300:9300"
+      - "19200:9200"
+    volumes:
+      - ./data/elasticsearch1/data:/var/data/elasticsearch
+
+  activemq1:
+    build: activemq1
+    networks:
+      - cloudcms-replicaset
+    env_file:
+      - activemq1/activemq.env
+    ports:
+      - "8162:8161"
+      - "61614:61613"
+      - "61617:61616"
+
+  ui2:
+    image: cloudcms/ui-server:3.2.79
+    networks:
+      - cloudcms-replicaset
+    environment:
+      - "GITANA_PROXY_SCHEME=http"
+      - "GITANA_PROXY_HOST=api2"
+      - "GITANA_PROXY_PORT=8080"
+      - "NODE_ENV=production"
+      - "CLOUDCMS_VIRTUAL_HOST=root.cloudcms.net"
+      - "CLOUDCMS_VIRTUAL_DRIVER_CLIENT_KEY=eb900512-9c58-4524-84ac-f748c134fddd"
+      - "CLOUDCMS_VIRTUAL_DRIVER_CLIENT_SECRET=I9QhlBfO5dMmvG5lFdBSD1zqu7FtI0IewnV7JPCP6IddGo4LjaWhYKunRDVaIPol9Vy8kX8AAEZj4JMMP/Q5eQ5MgVjwDxOMAqtuUXBP0vA="
+      - "CLOUDCMS_VIRTUAL_DRIVER_AUTHGRANT_KEY=02cee14c-748b-439c-b202-36a5127fa398"
+      - "CLOUDCMS_VIRTUAL_DRIVER_AUTHGRANT_SECRET=4HGslH6mbfoReDsOLf5LLfv0joVNsGsrBd/PUpWuYPeOO7tqm0RVDHxtJujdiAso0Qkx5qvRFxJuHXSUDrrp7p3b2kJQ9cd5p8Z8nJLehC4="
+      - "CLOUDCMS_VIRTUAL_DRIVER_BASE_URL=http://api2:8080"
+      - "CLOUDCMS_NOTIFICATIONS_ENABLED=true"
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_HOST=activemq2"
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_PORT=61613"
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_USERNAME="
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_PASSWORD="
+      - "CLOUDCMS_NOTIFICATIONS_STOMP_QUEUE_URL=/queue/cloudcms.ui.queue"
+      - "CLOUDCMS_STARTUP_TIMEOUT_MS=60000"
+    depends_on:
+      - api2
+      - activemq2
+    ports:
+      - "280:80"
+    volumes:
+      - ./data/ui2/hosts:/hosts
+
+  api2:
+    build: api2
+    networks:
+      - cloudcms-replicaset
+    depends_on:
+      - elasticsearch2
+      - activemq2
+    env_file:
+      - api2/api.env
+    ports:
+      - "28080:8080"
+    volumes:
+      - ./data/api2/logs:/opt/tomcat/logs
+      - ./data/api2/temp:/opt/tomcat/temp
+      - ./data/api2/cache:/data/cache
+      - ./data/api2/binaries:/data/binaries
+
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    networks:
+      - cloudcms-replicaset
+    environment:
+      - "cluster.name=cloudcms-docker-replicaset2"
+      - "transport.host=elasticsearch2"
+      - "network.host=elasticsearch2"
+      - "discovery.type=single-node"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx2g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "29300:9300"
+      - "29200:9200"
+    volumes:
+      - ./data/elasticsearch2/data:/var/data/elasticsearch
+
+  activemq2:
+    build: activemq2
+    networks:
+      - cloudcms-replicaset
+    env_file:
+      - activemq2/activemq.env
+    ports:
+      - "8163:8161"
+      - "61615:61613"
+      - "61618:61616"
+
+networks:
+  cloudcms-replicaset:
+    driver: bridge

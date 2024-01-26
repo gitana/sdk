@@ -1,20 +1,116 @@
-# Cloud CMS SDK
+# Gitana SDK
 
-Welcome to the Cloud CMS SDK GitHub Repository.
+Welcome to the Gitana SDK.
 
-This repository contains all of the sample code, examples, demos and getting started code for Cloud CMS.  Rather than
-maintain numerous separate repositories, we've elected to collect all of this stuff in a single place so that everything
-is available in place and easy to find.
+This repository contains deployment scripts, sample code, demos and other facilities to help you
+getting started using the Gitana platform.
 
-In general, the process for building and working with examples will differ based on the technology.  For example,
-building an Android app is considerably different than building a Node.js module or Titanium app.  Check the README
-file in each directory for further guidance.
+## Gitana Platform
 
-In terms of getting started, please visit:
+Gitana lets you curate, preview and approve insightful knowledge for training, validation and 
+scheduled release to the Foundation Models, private LLMs, vector DBs and API services that 
+support your live customers.
 
-    https://www.cloudcms.com/sdk.html
+The platform streamlines the following:
 
-This page provides an entry point in terms of what you need to know as a developer of Cloud CMS.  It covers API Keys,
-connecting and more.
+* Raw data comes in.  
+* Editorial and approval teams curate that data into knowledge alongside automated experts.
+* That knowledge is taught to foundation models, smart API endpoints and LLMs.
+* Once everything is trained up and ready to go, the release goes on-time as scheduled.
+
+The Gitana platform is available as both a cloud-hosted service and self-managed containers.  This allows
+customers to own their data, maintain private LLMs and Foundation Models and never cede their
+informational competitive advantage.
+
+For more information or to get started, please visit:
+
+    https://gitana.io/
+
+## Contents
+
+### Code Samples
+
+The `code-samples` directory contains samples of how to use our various drivers, REST APIs and middleware
+components within your own applications.  These should serve as a basis and a reference for building your 
+own applications.
+
+### Containers
+
+The `containers` directory contains guides and source configurations to help self-managed or on-premise
+users with deploying Gitana into various container frameworks, including Kubernetes, Amazon ECS and others.
+
+There are examples here for both Gitana 3.2 and Gitana 4.0.
+
+### Packager
+
+The `packager` directory contains examples how to use our ETL (Extract, Transform, Load) tool to consume
+data from external sources (such as databases, email or file systems) and store that content into Gitana.
+
+### UI Extensions
+
+The `ui-extensions` directory contains sample modules and theme extensions that can be applied to the 
+Gitana User Interface (both in the cloud and self-managed) to change the user interface and introduce
+new functionality.
+
+### UI Frameworks
+
+The `ui-frameworks` directory contains samples of how to utilize the Gitana APIs from within various
+frontend UI frameworks such as Next.js, Nuxt, React and others).
+
+## Drivers
+
+Gitana provides drivers for specific languages that help you to get started building awesome things.
+For guidance on these drivers, please see:
+
+[Gitana - C# Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/csharp.html)
+[Gitana - Go Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/go.html)
+[Gitana - Java Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/java.html)
+[Gitana - JavaScript Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/javascript.html)
+[Gitana - PHP Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/php.html)
+[Gitana - Python Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/python.html)
+[Gitana - Ruby Driver](https://gitana.io/documentation/gitana/4.0/developers/drivers/ruby.html)
+
+## Cookbooks
+
+As you learn about Gitana, the following cookbooks offer useful guides on various topics:
+
+[Gitana - Content Modeling Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/content-modeling.html)
+[Gitana - C# Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/csharp.html)
+[Gitana - Go Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/go.html)
+[Gitana - Java Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/java.html)
+[Gitana - JavaScript Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/javascript2.html)
+[Gitana - Node.js Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/nodejs.html)
+[Gitana - PHP Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/php.html)
+[Gitana - Python Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/python.html)
+[Gitana - REST API Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/rest.html)
+[Gitana - Ruby Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/ruby.html)
+[Gitana - Scripting Cookbook](https://gitana.io/documentation/gitana/4.0/developers/cookbooks/scripting.html)
+
+## UI Frameworks
+
+We provide some examples of writing code in modern UI frameworks (such as Next.js) that connect to the Gitana
+API and surface content.
+
+[Gitana - AngularJS Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/angularjs.html)
+[Gitana - cURL Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/curl.html)
+[Gitana - Gatsby Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/gatsbyjs.html)
+[Gitana - Next.js Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/nextjs.html)
+[Gitana - Nuxt.js Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/nuxtjs.html)
+[Gitana - Postman Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/postman.html)
+[Gitana - React Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/react.html)
+[Gitana - SvelteKit Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/sveltekit.html)
+[Gitana - Vue.js Guide](https://gitana.io/documentation/gitana/4.0/developers/frameworks/vuejs.html)
+
+## License
+
+Everything in this SDK is licensed under the Apache 2.0 license.  You are free to be inspired or utilize
+anything from this repository within your own projects.  Everything here is provided as is and is not
+supported by Gitana or any external parties.
+
+For more information, please review the provided [Apache 2.0 License](./LICENSE)
+
+## Questions
+
+If you have any questions, please reach out to Gitana's support org at support@gitana.io.
 
 Enjoy!

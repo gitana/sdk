@@ -1,0 +1,25 @@
+{
+  "name": "Bookstore",
+  "version": "1.0.1",
+  "description": "Clooud CMS Bookstore NuxtJS project",
+  "author": "Michael Whitman",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "cloudcms-nuxt": "^1.2.4",
+    "cross-env": "^5.2.0",
+    "fs": "0.0.1-security",
+    "nuxt": "^2.13.3"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        					http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        					http://www.springframework.org/schema/util
+							http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+    <!-- include this to enable ActiveMQ -->
+
+    <bean id="cloudcmsUIServerApplicationDeployer" class="org.gitana.platform.services.application.deployment.CloudCMSApplicationDeployer" parent="abstractApplicationDeployer">
+        <property name="type"><value>${gitana.default.application.deployer.uiserver.type}</value></property>
+        <property name="deploymentURL"><value>${gitana.default.application.deployer.uiserver.deploymentURL}</value></property>
+        <property name="domain"><value>${gitana.default.application.deployer.uiserver.domain}</value></property>
+        <property name="baseURL"><value>${gitana.default.application.deployer.uiserver.baseURL}</value></property>
+        <property name="notificationsEnabled"><value>${gitana.default.application.deployer.uiserver.notifications.enabled}</value></property>
+        <property name="notificationsProviderType"><value>${gitana.default.application.deployer.uiserver.notifications.providerType}</value></property>
+        <property name="notificationsProviderConfiguration">
+            <map>
+                <entry key="host"><value>${gitana.default.application.deployer.uiserver.notifications.configuration.host}</value></entry>
+                <entry key="port"><value>${gitana.default.application.deployer.uiserver.notifications.configuration.port}</value></entry>
+                <entry key="username"><value>${gitana.default.application.deployer.uiserver.notifications.configuration.username}</value></entry>
+                <entry key="password"><value>${gitana.default.application.deployer.uiserver.notifications.configuration.password}</value></entry>
+            </map>
+        </property>
+        <property name="notificationsTopic"><value>${gitana.default.application.deployer.uiserver.notifications.topic}</value></property>
+    </bean>
+
+</beans>

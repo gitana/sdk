@@ -1,0 +1,38 @@
+{
+  "name": "ReactSampleBookstoreExample",
+  "version": "1.0.0",
+  "description": "React Sample Bookstore Example",
+  "keywords": [
+    "Cloud CMS",
+    "React"
+  ],
+  "author": "Claire Li",
+  "contributors": [
+    "Shweta Thakkar",
+    "Michael Whitman"
+  ],
+  "scripts": {
+    "start": "node app",
+    "build-dev": "webpack --mode development --config public/webpack.config.js",
+    "build": "webpack --mode production --config public/webpack.config.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "cloudcms": "^0.2.8",
+    "express": "^4.17.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^6.2.1",
+    "react-router-dom": "^6.2.1",
+    "underscore": "^1.13.2"
+  },
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

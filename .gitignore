@@ -1,31 +1,21 @@
-#node-related folders and files
-node_modules
-*/node_modules
+node_modules/
+*/node_modules/
+target/
+*/target/
+build/
+*/build/
 
-#Bower components
-bower_components
-npm-debug.log
-
-#intelliJ IDE
 *.iml
 .idea
 
 # vim
 *.swp
 
-# build directories
-build/
-*/build/
-
-# 3rd-party / dependency files
-vendor/
-*/vendor/
-vendor
-
-
 # don't check in gitana.json files
 gitana.json
 gitana.json*
+*/gitana.json
+
 
 composer.lock
 composer.phar
@@ -39,6 +29,9 @@ sessions/*.json
 _temp
 
 target
+
+# license files
+*.lic
 
 # local binary
 .DS_Store

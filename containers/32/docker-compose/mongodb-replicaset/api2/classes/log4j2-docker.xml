@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+
+    <!--
+    <Properties>
+        <Property name="baseDir">/var/log/cloudcms</Property>
+    </Properties>
+    -->
+
+    <Appenders>
+
+    </Appenders>
+
+    <Loggers>
+
+        <!--
+            This file provides a selection of common settings that you can uncomment to have the API provide
+            more detailed debugging information about its various sub-systems.
+        -->
+
+
+        <!-- Rules -->
+        <!--
+        <Logger name="org.gitana.platform.services.rule" level="DEBUG"/>
+        -->
+
+
+        <!-- Notifications -->
+        <!--
+        <Logger name="org.gitana.platform.services.notification" level="DEBUG"/>
+        <Logger name="org.gitana.platform.util.NotificationUtil" level="DEBUG"/>
+        -->
+
+
+        <!-- Job Dispatcher -->
+        <!--
+        <Logger name="org.gitana.platform.services.cluster.InstanceJobDispatcher" level="DEBUG"/>
+        -->
+
+        <!-- Lock Service -->
+        <!--
+        <Logger name="org.gitana.platform.services.lock" level="DEBUG"/>
+        -->
+
+    </Loggers>
+
+
+</Configuration>
