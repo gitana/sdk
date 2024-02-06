@@ -1,0 +1,88 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "cloudcms-antivirus-server",
+            "image": "539235198345.dkr.ecr.us-east-2.amazonaws.com/cloudcms/antivirus-server:3.2.84-2024-01-22-08-58-51-arm64",
+            "cpu": 1024,
+            "memory": 2048,
+            "portMappings": [
+                {
+                    "name": "80",
+                    "containerPort": 80,
+                    "hostPort": 80    ,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "CLAMD_HOST",
+                    "value": "http://clamav"
+                },
+                {
+                    "name": "CLAMD_PORT",
+                    "value": "3310"
+                },
+                {
+                    "name": "USERNAME",
+                    "value": "av_username"
+                },
+                {
+                    "name": "PASSWORD",
+                    "value": "av_password"
+                },
+                {
+                    "name": "PORT",
+                    "value": "80"
+                }      
+            ],
+            "environmentFiles": [],
+            "linuxParameters": {
+                "tmpfs": []
+            },
+            "volumesFrom": [],
+            "ulimits": [],
+            "healthCheck": {
+                "command": [ 
+                    "CMD-SHELL", 
+                    "curl -f http://localhost/ || exit 1" 
+                ],
+                "interval": 5,
+                "retries": 5,
+                "startPeriod": 60,
+                "timeout": 10
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fgt/av",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        }
+    ],
+    "family": "av",
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "volumes": [
+        {
+            "name": "gitana"
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "runtimePlatform": {
+        "cpuArchitecture": "ARM64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": [],
+    "executionRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole"
+}

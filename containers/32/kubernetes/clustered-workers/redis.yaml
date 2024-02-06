@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    component: redis
+spec:
+  type: LoadBalancer
+  selector:
+    component: redis
+  ports:
+  - name: http
+    port: 6379
+    targetPort: 6379
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  labels:
+    component: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redis
+  serviceName: redis
+  template:
+    metadata:
+      labels:
+        component: redis
+    spec:
+      containers:
+      - image: redis:6.2.7
+        name: redis
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+          - name: redis-data
+            mountPath: /data
+      volumes:
+        - name: redis-data
+          emptyDir: { }
+

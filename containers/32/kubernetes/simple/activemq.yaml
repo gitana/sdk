@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq
+  labels:
+    component: activemq
+spec:
+  type: LoadBalancer
+  selector:
+    component: activemq
+  ports:
+    - name: mqtt
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: ampq
+      port: 5672
+      targetPort: 5672
+      protocol: TCP
+    - name: webconsole
+      port: 8161
+      targetPort: 8161
+      protocol: TCP
+    - name: stomp
+      port: 61613
+      targetPort: 61613
+      protocol: TCP
+    - name: ws
+      port: 61614
+      targetPort: 61614
+      protocol: TCP
+    - name: openwire
+      port: 61616
+      targetPort: 61616
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: activemq
+  labels:
+    component: activemq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: activemq
+  serviceName: activemq
+  template:
+    metadata:
+      labels:
+        component: activemq
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - image: islandora/activemq:3.1.1
+        imagePullPolicy: Always
+        name: activemq
+        env:
+        - name: ACTIVEMQ_USER
+          value: "admin"
+        - name: ACTIVEMQ_PASSWORD
+          value: "admin"
+        - name: ACTIVEMQ_WEB_ADMIN_NAME
+          value: "admin"
+        - name: ACTIVEMQ_WEB_ADMIN_PASSWORD
+          value: "admin"
+        ports:
+          - containerPort: 1883
+          - containerPort: 5672
+          - containerPort: 8161
+          - containerPort: 61613
+          - containerPort: 61614
+          - containerPort: 61616
+        volumeMounts:
+          - name: activemq-xml
+            mountPath: /opt/activemq/conf/activemq.xml
+            subPath: activemq.xml
+      volumes:
+        - name: activemq-xml
+          configMap:
+            name: activemq-xml
+

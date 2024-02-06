@@ -1,0 +1,108 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "init",
+            "image": "public.ecr.aws/aws-cli/aws-cli:2.15.6",
+            "cpu": 128,
+            "memory": 256,
+            "essential": false,
+            "command": [ "s3", "sync", "s3://gitana-fgt/config", "/gitana" ],
+            "mountPoints": [
+                {
+                    "sourceVolume": "gitana",
+                    "containerPath": "/gitana"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fgt/api-init",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        },
+        {
+            "name": "cloudcms-api-server",
+            "image": "539235198345.dkr.ecr.us-east-2.amazonaws.com/cloudcms/api-server:3.2.84-2024-01-22-08-58-51-arm64",
+            "cpu": 1536,
+            "memory": 8192,
+            "portMappings": [
+                {
+                    "name": "8080",
+                    "containerPort": 8080,
+                    "hostPort": 8080    ,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "dependsOn": [
+                {
+                    "containerName": "init",
+                    "condition": "COMPLETE"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "GITANA_LICENSE_PATH",
+                    "value": "/gitana/cloudcms_unlimited_19_jul_2015.lic"
+                }
+            ],
+            "environmentFiles": [],
+            "linuxParameters": {
+                "tmpfs": []
+            },
+            "volumesFrom": [],
+            "ulimits": [],
+            "healthCheck": {
+                "command": [ 
+                    "CMD-SHELL", 
+                    "curl -f http://localhost:8080/ping || exit 1" 
+                ],
+                "interval": 5,
+                "retries": 5,
+                "startPeriod": 60,
+                "timeout": 10
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fgt/api",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "mountPoints": [
+                {
+                    "sourceVolume": "gitana",
+                    "containerPath": "/gitana"
+                }
+            ]
+        }
+    ],
+    "family": "api",
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "volumes": [
+        {
+            "name": "gitana"
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "2048",
+    "memory": "8192",
+    "runtimePlatform": {
+        "cpuArchitecture": "ARM64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": [],
+    "executionRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole"
+}

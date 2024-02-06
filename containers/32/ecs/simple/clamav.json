@@ -1,0 +1,58 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "clamav",
+            "image": "docker.io/mkodockx/docker-clamav:latest",
+            "cpu": 1024,
+            "memory": 2048,
+            "portMappings": [
+                {
+                    "name": "3310",
+                    "containerPort": 3310,
+                    "hostPort": 3310    ,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [                
+            ],
+            "environmentFiles": [],
+            "linuxParameters": {
+                "tmpfs": []
+            },
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fgt/clamav",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        }
+    ],
+    "family": "clamav",
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "volumes": [
+        {
+            "name": "gitana"
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "runtimePlatform": {
+        "cpuArchitecture": "ARM64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": [],
+    "executionRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole"
+}

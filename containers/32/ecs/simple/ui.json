@@ -1,0 +1,128 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "init",
+            "image": "public.ecr.aws/aws-cli/aws-cli:2.15.6",
+            "cpu": 128,
+            "memory": 256,
+            "essential": false,
+            "command": [ "s3", "sync", "s3://gitana-fgt/config", "/gitana" ],
+            "mountPoints": [
+                {
+                    "sourceVolume": "gitana",
+                    "containerPath": "/gitana"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fgt/ui-init",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        },
+        {
+            "name": "cloudcms-ui-server",
+            "image": "539235198345.dkr.ecr.us-east-2.amazonaws.com/cloudcms/ui-server:3.2.84-2024-01-22-08-58-51-arm64",
+            "cpu": 1536,
+            "memory": 8192,
+            "portMappings": [
+                {
+                    "name": "80",
+                    "containerPort": 80,
+                    "hostPort": 80    ,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "dependsOn": [
+                {
+                    "containerName": "init",
+                    "condition": "COMPLETE"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "GITANA_API_URL",
+                    "value": "http://api"
+                },
+                {
+                    "name": "CLOUDCMS_NOTIFICATIONS_ENABLED",
+                    "value": "true"
+                },
+                {
+                    "name": "CLOUDCMS_NOTIFICATIONS_SQS_QUEUE_URL",
+                    "value": "http://sqs.us-east-1.amazonaws.com/{accountId}/{queueId}"
+                },
+                {
+                    "name": "CLOUDCMS_NOTIFICATIONS_SQS_REGION",
+                    "value": "{region}"
+                },
+                {
+                    "name": "CLOUDCMS_NOTIFICATIONS_SQS_ACCESS_KEY",
+                    "value": "{accessKey}"
+                },
+                {
+                    "name": "CLOUDCMS_NOTIFICATIONS_SQS_SECRET_KEY",
+                    "value": "{secretKey}"
+                }
+            ],
+            "environmentFiles": [],
+            "linuxParameters": {
+                "tmpfs": []
+            },
+            "volumesFrom": [],
+            "ulimits": [],
+            "healthCheck": {
+                "command": [ 
+                    "CMD-SHELL", 
+                    "curl -f http://localhost/ || exit 1" 
+                ],
+                "interval": 5,
+                "retries": 5,
+                "startPeriod": 60,
+                "timeout": 10
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/fgt/ui",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "mountPoints": [
+                {
+                    "sourceVolume": "gitana",
+                    "containerPath": "/gitana"
+                }
+            ]
+        }
+    ],
+    "family": "ui",
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "volumes": [
+        {
+            "name": "gitana"
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "2048",
+    "memory": "8192",
+    "runtimePlatform": {
+        "cpuArchitecture": "ARM64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": [],
+    "executionRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::539235198345:role/ecsTaskExecutionRole"
+}
