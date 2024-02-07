@@ -11,7 +11,9 @@ This is provided solely for reference.
     docker login --username {docker-username} --password '{docker-password}'
     docker-compose up -d mongodb1 mongodb2 mongodb3
 
-### initialize the replic set. only have to do this once since the mongo servers persist their state to ./data/mongodbN (see dockercompose.yml)
+### initialize the replica set
+
+    You only have to do this once since the mongo servers persist their state to ./data/mongodbN (see dockercompose.yml)
 
     mongo localhost:27027 --eval 'rs.initiate( {_id : "cloudcms-replicaset",members: [ { _id: 0, host: "mongodb1:27017" },{ _id: 1, host: "mongodb2:27017" },{ _id: 2, host: "mongodb3:27017" }]})'
 
