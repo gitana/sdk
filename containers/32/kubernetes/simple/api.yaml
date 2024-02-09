@@ -33,7 +33,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: api
-        image: 539235198345.dkr.ecr.us-east-2.amazonaws.com/cloudcms/api-server:3.2.84-2024-01-22-08-58-51-arm64
+        image: docker.io/cloudcms/api-server:3.2.84
         imagePullPolicy: Always        
         envFrom:
         - secretRef:

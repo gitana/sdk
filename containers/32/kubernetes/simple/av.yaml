@@ -31,8 +31,8 @@ spec:
         component: av
     spec:
       containers:
-      - image: 539235198345.dkr.ecr.us-east-2.amazonaws.com/cloudcms/antivirus-server:3.2.84-2024-01-22-08-58-51-arm64
-        name: av
+      - name: av
+        image: docker.io/cloudcms/antivirus-server:3.2.84
         env:
         - name: CLAMD_HOST
           value: clamav-0.clamav.default.svc.cluster.local

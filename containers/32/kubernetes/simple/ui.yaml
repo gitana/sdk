@@ -34,9 +34,9 @@ spec:
         component: ui
     spec:
       containers:
-      - image: 539235198345.dkr.ecr.us-east-2.amazonaws.com/cloudcms/ui-server:3.2.84-2024-01-22-08-58-51-arm64
+      - name: ui
+        image: docker.io/cloudcms/ui-server:3.2.84
         imagePullPolicy: Always
-        name: ui
         ports:
         - containerPort: 80
         envFrom:
