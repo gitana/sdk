@@ -26,7 +26,7 @@
         },
         {
             "name": "cloudcms-api-server",
-            "image": "docker.io/cloudcms/api-server:3.2.84",
+            "image": "docker.io/cloudcms/api-server:3.2.85",
             "cpu": 1536,
             "memory": 8192,
             "portMappings": [
@@ -49,6 +49,10 @@
                 {
                     "name": "GITANA_LICENSE_PATH",
                     "value": "/gitana/cloudcms_unlimited_19_jul_2015.lic"
+                },
+                {
+                    "name": "JAVA_OPTS",
+                    "value": "-XX:+UseContainerSupport -XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -server -Dsun.net.inetaddr.ttl=60 -Djava.net.preferIPv4Stack=true -Djava.io.tmpdir=/opt/tomcat/temp -XX:+ExitOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Dio.netty.tryReflectionSetAccessible=true --add-modules=ALL-SYSTEM --add-modules java.se --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.ref=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED"
                 }
             ],
             "environmentFiles": [],
