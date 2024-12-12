@@ -59,8 +59,10 @@
                             <p>{{book.summary}}</p>
                         </div>
 
-                        <div class="tab-pane" id="download" role="tabpanel">
-                            <h3>Download</h3>
+                        <div *ngIf="book.pdfUrl" class="tab-pane" id="download" role="tabpanel">
+                            <h3>
+                                <a href={{book.pdfUrl}} target="_blank">Download</a>
+                            </h3>
                             <p>Download this book</p>
                         </div>
 

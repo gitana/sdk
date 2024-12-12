@@ -113,29 +113,29 @@ async function init() {
 function updateProperties(result) {
     if (result.rows !== undefined && result.rows.length) {
         result.rows.map((row) => { 
-            row.author && (row.authorTitle = row.author.title);
-            row.imageUrl = `/static/${row._doc}/default.${row._system.attachments.default.ext}` 
-            if (row.recommendations) {
-                row.recommendations.map((book) => {
-                    book._doc = book.id;
-                    book.authorTitle = "";
-                    book.imageUrl = `/static/${book._doc || book.id}/default.jpg`;
-        });
-            }
+            processDocument(row);
         });
     } else if (result._doc) {
-        result.author && (result.authorTitle = result.author.title);
-        result.imageUrl = `/static/${result._doc}/default.${result._system.attachments.default.ext}` 
-        if (result.recommendations) {
-            result.recommendations.map((book) => {
+        processDocument(result);
+    }
+
+    return result;
+}
+
+function processDocument(document) {
+    document.author && (document.authorTitle = document.author.title);
+        if (document._system.attachments) {
+            document.imageUrl = `/static/${document._doc}/default.${document._system.attachments.default.ext}`
+            if (document._system.attachments.book_pdf)
+            document.pdfUrl = `/static/${document._doc}/book_pdf.${document._system.attachments.book_pdf.ext}` 
+        }
+        if (document.recommendations) {
+            document.recommendations.map((book) => {
                 book._doc = book.id;
                 book.authorTitle = "";
                 book.imageUrl = `/static/${book._doc || book.id}/default.jpg`;
             });
         }
-    }
-
-    return result;
 }
 
 async function handleStatic(req, res, cloudcmsSession, repositoryId, branchId) {
